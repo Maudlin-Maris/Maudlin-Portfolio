@@ -25,7 +25,7 @@ export const ContactSection = () => {
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    alert("Form submitted successfully!");
+
     setFormData({ name: "", email: "", message: "" }); // Reset form data
   };
 
@@ -40,10 +40,10 @@ export const ContactSection = () => {
           <div className="flex flex-col md:flex-row gap-8 md:gap-36 items-center">
             <div className="md:flex md:flex-col md:gap-7">
               <h2 className="font-serif text-2xl md:text-5xl md:font-bold bg-gradient-to-r from-sky-500 to-emerald-500 bg-clip-text text-transparent animate-pulse">
-                Let's create something amazing together
+                Let&apos;s create something amazing together
               </h2>
               <p className="text-sm md:text-[20px] md:leading-[35px] mt-2 md:max-w-[550px]">
-                Ready to bring your next project to life? Let's connect and
+                Ready to bring your next project to life? Let&apos;s connect and
                 discuss how I can help you achieve your goals.
               </p>
               <div className="flex flex-col gap-[20px] font-[22px]">
