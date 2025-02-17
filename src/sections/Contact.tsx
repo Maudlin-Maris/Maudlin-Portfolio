@@ -70,7 +70,7 @@ export const ContactSection = () => {
               <input type="hidden" name="form-name" value="contact" />
               <label
                 className="text-[22px] text-[#D8D8D8] font-medium"
-                htmlFor=""
+                htmlFor="name"
               >
                 Name:
               </label>
@@ -83,7 +83,7 @@ export const ContactSection = () => {
                 placeholder="Enter your name"
                 name="name"
               />
-              <label>Email:</label>
+              <label htmlFor="email">Email:</label>
               <input
                 type="email"
                 name="email"
@@ -95,7 +95,7 @@ export const ContactSection = () => {
               />
               <label
                 className="text-[22px] text-[#D8D8D8] font-medium"
-                htmlFor=""
+                htmlFor="message"
               >
                 Write your Message
               </label>
