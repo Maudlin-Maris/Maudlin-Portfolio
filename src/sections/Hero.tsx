@@ -5,11 +5,7 @@ import grainImage from "@/assets/images/grain.jpg";
 import StarIcons from "@/assets/icons/star.svg";
 import { HeroOrbit } from "@/components/HeroOrbits";
 import SparkleIcon from "@/assets/icons/sparkle.svg";
-import AnchorLink from "react-anchor-link-smooth-scroll";
-import Link from "next/link";
 export const HeroSection = () => {
-  
-
   return (
     <section
       id="home"
