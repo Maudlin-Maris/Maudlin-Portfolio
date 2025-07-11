@@ -167,6 +167,13 @@ export const AboutSection = () => {
                     className="outline-none border border-none w-1/2 h-2 rounded-[50px] bg-gradient-to-r from-emerald-300 to-sky-400"
                   />
                 </div>
+                 <div className="flex gap-2 items-center text-xs transition duration-300">
+                  <p className="pl-4">Copy writing</p>
+                  <hr
+                    style={{ width: "60%" }}
+                    className="outline-none border border-none w-1/2 h-2 rounded-[50px] bg-gradient-to-r from-emerald-300 to-sky-400"
+                  />
+                </div>
               </div>
             </Card>
             <Card className="h-[320px] md:col-span-3 lg:col-span-2">
