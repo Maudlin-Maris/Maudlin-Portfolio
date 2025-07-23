@@ -11,12 +11,16 @@ import {
 
 export const ContactSection = () => {
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
+    from_name: "",
+    from_email: "",
     message: "",
   });
 
-  const handleChange = (e: { target: { name: any; value: any } }) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState("");
+  const [submitSuccess, setSubmitSuccess] = useState<boolean | null>(null);
+
+  const handleChange = (e: { target: { name: string; value: string } }) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -24,25 +28,33 @@ export const ContactSection = () => {
     });
   };
 
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitMessage("");
+    setSubmitSuccess(null);
 
     emailjs
       .send(
-        "service_zlp1g9g", // Replace with EmailJS Service ID
-        "template_054h3je", // Replace with EmailJS Template ID
+        "service_zlp1g9g",       // Your EmailJS Service ID
+        "template_054h3je",     // Your EmailJS Template ID
         formData,
-        "4v8_g1t-0lyGrznNx" // Replace with EmailJS Public Key
+        "4v8_g1t-0lyGrznNx"     // Your EmailJS Public Key
       )
       .then(
-        (response) => {
-          alert("Message sent successfully!");
-          setFormData({ name: "", email: "", message: "" }); // Reset form
+        () => {
+          setSubmitSuccess(true);
+          setSubmitMessage("Message sent successfully!");
+          setFormData({ from_name: "", from_email: "", message: "" });
         },
-        (error) => {
-          alert("Failed to send message, try again.");
+        () => {
+          setSubmitSuccess(false);
+          setSubmitMessage("Failed to send message. Please try again.");
         }
-      );
+      )
+      .finally(() => {
+        setIsSubmitting(false);
+      });
   };
 
   return (
@@ -77,40 +89,36 @@ export const ContactSection = () => {
             </div>
 
             <form
-              name="contact"
-              method="POST"
-              data-netlify="true"
               onSubmit={handleSubmit}
               className="flex flex-col items-start md:gap-[10px]"
             >
               <div>
-                <input type="hidden" name="form-name" value="contact" />
                 <label
                   className="text-[22px] text-[#D8D8D8] font-medium"
-                  htmlFor="name"
+                  htmlFor="from_name"
                 >
                   Name:
                 </label>
-
                 <input
                   className="border border-none w-[240px] md:w-[350px] md:h-12 pl-[20px] rounded-[4px] bg-[#32323C] text-[#A0A0A0] text-[20px]"
                   type="text"
-                  value={formData.name}
+                  value={formData.from_name}
                   onChange={handleChange}
                   required
                   placeholder="Enter your name"
-                  name="name"
+                  name="from_name"
                 />
+
                 <label
-                  htmlFor="email"
+                  htmlFor="from_email"
                   className="text-[22px] text-[#D8D8D8] mt-4 font-medium"
                 >
                   Email:
                 </label>
                 <input
                   type="email"
-                  name="email"
-                  value={formData.email}
+                  name="from_email"
+                  value={formData.from_email}
                   onChange={handleChange}
                   required
                   className="border border-none w-[240px] md:w-[350px] md:h-12 pl-[20px] rounded-[4px] bg-[#32323C] text-[#A0A0A0] text-[20px]"
@@ -119,7 +127,7 @@ export const ContactSection = () => {
               </div>
               <div>
                 <label
-                  className="text-[22px]  text-[#D8D8D8] font-medium"
+                  className="text-[22px] text-[#D8D8D8] font-medium"
                   htmlFor="message"
                 >
                   Write your Message
@@ -133,13 +141,27 @@ export const ContactSection = () => {
                   placeholder="Enter your message"
                   className="md:w-[350px] border border-none p-[25px] rounded-[4px] bg-[#32323c] text-[#A0A0A0] text-[20px]"
                 />
+
                 <button
                   type="submit"
-                  className="text-white bg-gradient-to-r mt-[20px] md:mt-[5px] from-sky-500 to-emerald-500 inline-flex items-center px-6 h-12 rounded-xl gap-2 w-max border border-none transition-[0.3s] hover:scale-[1.1] hover:transition-[0.3s]"
+                  disabled={isSubmitting}
+                  className="text-white bg-gradient-to-r mt-[20px] md:mt-[5px] from-sky-500 to-emerald-500 inline-flex items-center px-6 h-12 rounded-xl gap-2 w-max border border-none transition-[0.3s] hover:scale-[1.1] hover:transition-[0.3s] disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <span className="font-semibold">Contact Me</span>
+                  <span className="font-semibold">
+                    {isSubmitting ? "Sending..." : "Contact Me"}
+                  </span>
                   <ArrowUpRightIcon className="size-4" />
                 </button>
+
+                {submitMessage && (
+                  <p
+                    className={`mt-4 text-[18px] ${
+                      submitSuccess ? "text-green-400" : "text-red-400"
+                    }`}
+                  >
+                    {submitMessage}
+                  </p>
+                )}
               </div>
             </form>
           </div>
